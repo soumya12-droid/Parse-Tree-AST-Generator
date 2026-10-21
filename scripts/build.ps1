@@ -14,8 +14,19 @@ if (-not $clang) {
 
 New-Item -ItemType Directory -Force -Path $buildDir | Out-Null
 
-# Phase 0 compiles main.cpp only; later phases add more sources under src/.
-$sources = @(Join-Path $root 'src\main.cpp')
+# Later phases add more sources under src/.
+$sources = @(
+    (Join-Path $root 'src\main.cpp'),
+    (Join-Path $root 'src\core\lexer.cpp'),
+    (Join-Path $root 'src\core\parser.cpp'),
+    (Join-Path $root 'src\core\ast_builder.cpp'),
+    (Join-Path $root 'src\core\analyzer.cpp'),
+    (Join-Path $root 'src\output\text_printer.cpp'),
+    (Join-Path $root 'src\output\json_writer.cpp'),
+    (Join-Path $root 'src\server\json_request.cpp'),
+    (Join-Path $root 'src\server\http_server.cpp'),
+    (Join-Path $root 'src\server\serve_command.cpp')
+)
 
 $flags = @('-std=c++17', '-Wall', '-Wextra', '-Wpedantic', '-O1', '-I', (Join-Path $root 'src'))
 
