@@ -1,7 +1,19 @@
+# Build output and binaries
 build/
 *.exe
 *.obj
 *.pdb
 *.ilk
 *.o
+
+# Editors, tools, local-only config
 .vscode/
+.vs/
+.claude/
+
+# Node (the frontend tests need no packages, but just in case)
+node_modules/
+
+# Logs and OS files
+*.log
+Thumbs.db

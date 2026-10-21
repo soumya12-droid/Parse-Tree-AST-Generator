@@ -1,0 +1,3 @@
+# Keep line endings stable. The fixture freshness check compares bytes, so
+# generated files must stay LF even on Windows checkouts.
+* text=auto eol=lf
