@@ -1,0 +1,8 @@
+Program
+`-- Assignment
+    |-- Identifier(result)
+    `-- Multiply
+        |-- Add
+        |   |-- Identifier(x)
+        |   `-- Identifier(y)
+        `-- Identifier(z)

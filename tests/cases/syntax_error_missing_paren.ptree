@@ -1,0 +1,2 @@
+Syntax error at line 1, column 11: Unexpected token ';'; missing ')' to close '(' at line 1, column 5
+  Expected: ')'

@@ -1,0 +1,8 @@
+Program
+`-- Assignment
+    |-- Identifier(a)
+    `-- Add
+        |-- Identifier(b)
+        `-- Multiply
+            |-- Identifier(c)
+            `-- Number(5)

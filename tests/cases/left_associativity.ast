@@ -1,0 +1,8 @@
+Program
+`-- Assignment
+    |-- Identifier(r)
+    `-- Subtract
+        |-- Subtract
+        |   |-- Identifier(a)
+        |   `-- Identifier(b)
+        `-- Identifier(c)

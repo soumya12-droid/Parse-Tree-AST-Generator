@@ -1,0 +1,11 @@
+1:1 ID(result)
+1:8 ASSIGN(=)
+1:10 LPAREN(()
+1:11 ID(x)
+1:13 PLUS(+)
+1:15 ID(y)
+1:16 RPAREN())
+1:18 MUL(*)
+1:20 ID(z)
+1:21 SEMICOLON(;)
+1:22 END

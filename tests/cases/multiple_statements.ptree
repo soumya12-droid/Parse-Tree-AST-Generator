@@ -1,0 +1,21 @@
+program
+|-- statement
+|   |-- ID(a)
+|   |-- ASSIGN(=)
+|   |-- expression
+|   |   `-- term
+|   |       `-- factor
+|   |           `-- NUMBER(1)
+|   `-- SEMICOLON(;)
+`-- statement
+    |-- ID(b)
+    |-- ASSIGN(=)
+    |-- expression
+    |   |-- term
+    |   |   `-- factor
+    |   |       `-- ID(a)
+    |   |-- MINUS(-)
+    |   `-- term
+    |       `-- factor
+    |           `-- NUMBER(2)
+    `-- SEMICOLON(;)

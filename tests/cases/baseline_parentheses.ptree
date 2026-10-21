@@ -1,0 +1,21 @@
+program
+`-- statement
+    |-- ID(result)
+    |-- ASSIGN(=)
+    |-- expression
+    |   `-- term
+    |       |-- factor
+    |       |   |-- LPAREN(()
+    |       |   |-- expression
+    |       |   |   |-- term
+    |       |   |   |   `-- factor
+    |       |   |   |       `-- ID(x)
+    |       |   |   |-- PLUS(+)
+    |       |   |   `-- term
+    |       |   |       `-- factor
+    |       |   |           `-- ID(y)
+    |       |   `-- RPAREN())
+    |       |-- MUL(*)
+    |       `-- factor
+    |           `-- ID(z)
+    `-- SEMICOLON(;)

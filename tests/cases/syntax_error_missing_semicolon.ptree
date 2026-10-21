@@ -1,0 +1,2 @@
+Syntax error at line 2, column 1: Unexpected token 'd'; missing ';' after 'c' at line 1, column 9
+  Expected: ';'

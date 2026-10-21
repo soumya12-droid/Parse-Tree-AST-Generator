@@ -1,0 +1,2 @@
+Syntax error at line 1, column 9: Unexpected token '*'
+  Expected: identifier, number, or '('

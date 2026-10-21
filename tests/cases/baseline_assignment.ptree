@@ -1,0 +1,16 @@
+program
+`-- statement
+    |-- ID(a)
+    |-- ASSIGN(=)
+    |-- expression
+    |   |-- term
+    |   |   `-- factor
+    |   |       `-- ID(b)
+    |   |-- PLUS(+)
+    |   `-- term
+    |       |-- factor
+    |       |   `-- ID(c)
+    |       |-- MUL(*)
+    |       `-- factor
+    |           `-- NUMBER(5)
+    `-- SEMICOLON(;)
