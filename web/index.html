@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Parse Tree and AST Generator</title>
+  <meta name="color-scheme" content="light dark">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="app-header">
+    <div class="brand">
+      <h1>Parse Tree &amp; AST Generator</h1>
+    </div>
+    <div id="provenance" class="provenance" title="Where the analysis results come from"></div>
+  </header>
+
+  <main class="layout">
+    <div class="col col-left">
+
+      <section class="panel source-panel" aria-labelledby="h-source">
+        <div class="panel-head">
+          <h2 id="h-source">Source</h2>
+          <div class="head-actions">
+            <label class="visually-hidden" for="example-select">Load an example</label>
+            <select id="example-select" class="select">
+              <option value="">Load example&hellip;</option>
+            </select>
+            <button type="button" id="open-file" class="btn btn-quiet"
+                    title="Open a result file produced by scripts\export-fixtures.ps1">Open result file&hellip;</button>
+            <input type="file" id="file-input" accept=".json,application/json" hidden>
+          </div>
+        </div>
+
+        <div id="replace-confirm" class="confirm" role="alertdialog" aria-labelledby="replace-confirm-text" hidden>
+          <span id="replace-confirm-text"></span>
+          <span class="confirm-actions">
+            <button type="button" id="replace-yes" class="btn btn-small">Replace</button>
+            <button type="button" id="replace-no" class="btn btn-quiet btn-small">Keep mine</button>
+          </span>
+        </div>
+
+        <div class="editor">
+          <pre id="gutter" class="gutter" aria-hidden="true">1</pre>
+          <div class="editor-stack">
+            <pre id="backdrop" class="backdrop" aria-hidden="true"></pre>
+            <textarea id="source" class="source" spellcheck="false" autocomplete="off"
+                      autocapitalize="off" wrap="off" aria-label="Source code"
+                      placeholder="Type a program, e.g.  a = b + c * 5;"></textarea>
+          </div>
+        </div>
+
+        <div class="actions">
+          <button type="button" id="analyze" class="btn btn-primary">Analyze</button>
+          <span class="hint"><kbd>Ctrl</kbd>+<kbd>Enter</kbd></span>
+          <span class="spacer"></span>
+          <button type="button" id="clear-source" class="btn btn-quiet">Clear</button>
+        </div>
+        <p id="example-note" class="note"></p>
+      </section>
+
+      <section id="status" class="panel status-panel status-idle" aria-live="polite" aria-label="Analysis status"></section>
+
+      <section class="panel tokens-panel" aria-labelledby="h-tokens">
+        <div class="panel-head">
+          <h2 id="h-tokens">Tokens <span id="token-count" class="count"></span></h2>
+        </div>
+        <div id="tokens" class="tokens-scroll"></div>
+      </section>
+    </div>
+
+    <div class="col col-right">
+      <section class="panel trees-panel" aria-labelledby="h-trees">
+        <div class="panel-head">
+          <h2 id="h-trees">Syntax trees</h2>
+          <div class="segmented" role="group" aria-label="Which trees to show">
+            <button type="button" data-view-btn="both" aria-pressed="true">Side by side</button>
+            <button type="button" data-view-btn="parse" aria-pressed="false">Parse tree</button>
+            <button type="button" data-view-btn="ast" aria-pressed="false">AST</button>
+          </div>
+        </div>
+
+        <div id="panes" class="panes" data-view="both">
+          <section id="pane-parse" class="tree-pane" aria-label="Concrete parse tree">
+            <div class="pane-head">
+              <h3>Concrete parse tree</h3>
+              <div class="pane-tools">
+                <button type="button" class="btn btn-tool" data-action="zoom-out" title="Zoom out" aria-label="Zoom out">&minus;</button>
+                <span class="zoom-label" data-zoom-label aria-live="off"></span>
+                <button type="button" class="btn btn-tool" data-action="zoom-in" title="Zoom in" aria-label="Zoom in">+</button>
+                <button type="button" class="btn btn-tool btn-text" data-action="fit" title="Fit the whole tree in view">Fit</button>
+                <button type="button" class="btn btn-tool btn-text" data-action="reset" title="100% zoom, scrolled to the root">Reset</button>
+                <span class="tool-sep"></span>
+                <button type="button" class="btn btn-tool btn-text" data-action="expand-all" title="Expand every node">Expand</button>
+                <button type="button" class="btn btn-tool btn-text" data-action="collapse-all" title="Collapse every node below the root's children">Collapse</button>
+              </div>
+            </div>
+            <div class="tree-scroll" tabindex="-1"></div>
+            <p class="pane-empty"></p>
+            <div class="pane-foot">
+              <p class="legend" aria-label="Legend">
+                <span><i class="sw sw-nonterminal"></i>grammar rule</span>
+                <span><i class="sw sw-leaf"></i>token</span>
+                <span><i class="sw sw-operator"></i>operator</span>
+                <span><i class="sw sw-punct"></i>punctuation</span>
+              </p>
+              <p class="pane-note"></p>
+            </div>
+          </section>
+
+          <section id="pane-ast" class="tree-pane" aria-label="Abstract syntax tree">
+            <div class="pane-head">
+              <h3>Abstract syntax tree</h3>
+              <div class="pane-tools">
+                <button type="button" class="btn btn-tool" data-action="zoom-out" title="Zoom out" aria-label="Zoom out">&minus;</button>
+                <span class="zoom-label" data-zoom-label aria-live="off"></span>
+                <button type="button" class="btn btn-tool" data-action="zoom-in" title="Zoom in" aria-label="Zoom in">+</button>
+                <button type="button" class="btn btn-tool btn-text" data-action="fit" title="Fit the whole tree in view">Fit</button>
+                <button type="button" class="btn btn-tool btn-text" data-action="reset" title="100% zoom, scrolled to the root">Reset</button>
+                <span class="tool-sep"></span>
+                <button type="button" class="btn btn-tool btn-text" data-action="expand-all" title="Expand every node">Expand</button>
+                <button type="button" class="btn btn-tool btn-text" data-action="collapse-all" title="Collapse every node below the root's children">Collapse</button>
+              </div>
+            </div>
+            <div class="tree-scroll" tabindex="-1"></div>
+            <p class="pane-empty"></p>
+            <div class="pane-foot">
+              <p class="legend" aria-label="Legend">
+                <span><i class="sw sw-struct"></i>structure</span>
+                <span><i class="sw sw-op"></i>operation</span>
+                <span><i class="sw sw-leaf"></i>identifier / number</span>
+              </p>
+              <p class="pane-note"></p>
+            </div>
+          </section>
+        </div>
+      </section>
+
+      <section id="details" class="panel details-panel" aria-label="Node details" aria-live="polite"></section>
+    </div>
+  </main>
+
+  <!-- Captured output of the real C++ pipeline (tools/export_fixtures.cpp). -->
+  <script src="fixtures/fixtures.js"></script>
+  <script src="js/contract.js"></script>
+  <script src="js/sourcemap.js"></script>
+  <script src="js/treemodel.js"></script>
+  <script src="js/layout.js"></script>
+  <script src="js/analyzer.js"></script>
+  <script src="js/state.js"></script>
+  <script src="js/editor.js"></script>
+  <script src="js/treeview.js"></script>
+  <script src="js/panels.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
