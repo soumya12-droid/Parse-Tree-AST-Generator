@@ -191,8 +191,5 @@ Worth knowing before a demo:
 - Only the first syntax error is reported; there is no error recovery.
 - The editor is a text area, so Windows line endings are shown as plain line
   breaks. Token positions are not affected.
-- Browser testing was done in one browser (an embedded Chromium pane) at about
-  1280, 760 and 480 px wide. Other browsers, and opening `web/index.html`
-  directly from disk instead of through the server, were not tested.
 - Not implemented: declarations, conditionals, loops, functions, a symbol table,
   semantic checks, three-address code.
